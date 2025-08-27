@@ -1,0 +1,186 @@
+[
+  {
+    "keywords": ["hi", "halo", "hai"],
+    "response": "Halooo.. senang bertemu kamu! Ada yang bisa aku bantu? 😊"
+  },
+  {
+    "keywords": [
+      "aku mau bertanya", "aku ada pertanyaan", "boleh tanya", "aku mau tanya", "saya mau tanya", "saya ada pertanyaan", "bisa tanya", "bisa saya tanya"
+    ],
+    "response": "Tentu saja boleh! Silakan tanyakan apa pun tentang kampus Universitas Putera Batam atau Prodi Teknik Informatika 😉"
+  },
+  {
+    "keywords": [
+      "tentang universitas putera batam", "bagaimana tentang universitas putera batam", "jelaskan tentang universitas putera batam",
+      "apa itu universitas putera batam", "universitas putera batam itu apa", "ceritakan universitas putera batam", "universitas putera batam"
+    ],
+    "response": "Universitas Putera Batam (UPB) adalah perguruan tinggi di Batam yang fokus pada teknologi, bisnis, dan humaniora, dengan visi mencetak SDM unggul dan berdaya saing global. 🌍"
+  },
+  {
+    "keywords": [
+      "ada berapa fakultas", "fakultas apa saja", "sebutkan fakultas", "wah apa saja fakultasnya", "fakultas di universitas putera batam", "bisakah sebutkan fakultas di universitas putera batam"
+    ],
+    "response": "Saat ini Universitas Putera Batam memiliki 2 Fakultas, yaitu Fakultas Teknik & Komputer serta Fakultas Ilmu Sosial & Humaniora."
+  },
+  {
+    "keywords": [
+      "sebutkan prodi di fakultas teknik dan komputer", "apa saja prodi fakultas teknik dan komputer", "jurusan di fakultas teknik dan komputer", "program studi fakultas teknik dan komputer"
+    ],
+    "response": "Di Fakultas Teknik & Komputer ada 3 Prodi: Teknik Informatika, Sistem Informasi, dan Teknik Industri."
+  },
+  {
+    "keywords": [
+      "sebutkan prodi di fakultas ilmu sosial dan humaniora", "apa saja prodi fakultas ilmu sosial dan humaniora", "jurusan di fakultas ilmu sosial dan humaniora", "program studi fakultas ilmu sosial dan humaniora"
+    ],
+    "response": "Di Fakultas Ilmu Sosial & Humaniora ada 7 Prodi: Ilmu Hukum, Manajemen, Magister Manajemen, Akuntansi, Ilmu Komunikasi, Sastra Inggris, dan Sistem Administrasi Negara."
+  },
+  {
+    "keywords": [
+      "apakah ada program magister di universitas putera batam", "ada program magister di universitas putera batam", "program magister di universitas putera batam"
+    ],
+    "response": "Ya tentu saja ada! Universitas Putera Batam memiliki program Magister Manajemen di bawah Fakultas Ilmu Sosial & Humaniora 🎓"
+  },
+  {
+    "keywords": [
+      "tentang prodi teknik informatika", "bagaimana tentang prodi teknik informatika", "jelaskan tentang prodi teknik informatika",
+      "apa itu prodi teknik informatika", "prodi teknik informatika itu apa", "ceritakan prodi teknik informatika", "prodi teknik informatika"
+    ],
+    "response": "Prodi Teknik Informatika di Universitas Putera Batam fokus pada pengembangan perangkat lunak, sistem informasi, dan teknologi komputer, dengan kurikulum yang up-to-date untuk mempersiapkan lulusan menghadapi tantangan di industri teknologi. 💻"
+  },
+  {
+    "keywords": ["bagaimana untuk fasilitas di dalam ruangan kelas", "fasilitas di dalam kelas", "fasilitas kelas"],
+    "response": "Untuk setiap ruangan kelas, sudah dilengkapi Proyektor, AC, dan suasana yang kondusif 👨‍🏫"
+  },
+  {
+    "keywords": ["apakah tersedia laboratorium di universitas putera batam", "laboratorium di universitas putera batam", "ada laboratorium di universitas putera batam"],
+    "response": "Pada Universitas Putera Batam telah menyediakan beberapa laboratorium yang terdiri dari: Laboratorium Ergonomi, Laboratorium Cisco, Laboratorium Multimedia, Laboratorium Akuntansi, Laboratorium Bahasa, Laboratorium Peradilan Semu, Laboratorium Jaringan, dan Laboratorium Komputer🔬"
+  },
+  {
+    "keywords": ["kegiatan"],
+    "response": "Selain kuliah, ada Himpunan Mahasiswa Prodi untuk setiap masing-masing Program Studi. Kemudian juga ada Unit Kegiatan Mahasiswa (UKM) seperti UKM Kerohanian, Seni, Olahraga, Penelitian dan Pengembangan, Komputer, Bahasa Inggris, dan Kewirausahaan.⚽🎨💻"
+  },
+  {
+    "keywords": [
+      "bagaimana untuk fasilitas kampus", "fasilitas kampus", "fasilitas di kampus"
+    ],
+    "response": "Untuk fasilitas kampus, Universitas Putera Batam menyediakan berbagai fasilitas penunjang seperti kantin, perpustakaan, WiFi, lapangan basket, musholla, IDX Corner dan area parkir yang memadai untuk kenyamanan mahasiswa selama beraktivitas di kampus. dan pastinya laboratorium komputer yang lengkap untuk mendukung kegiatan belajar mengajar mahasiswa. serta Kampus Universitas Putera Batam memiliki 2 kampus di lokasi yang berbeda, yaitu Kampus Utama di Tembesi dan Kampus Nagoya. 🏫"
+  },
+  {
+    "keywords": ["kantin"],
+    "response": "Kantin kampus punya banyak pilihan makanan enak & ramah kantong 😋"
+  },
+  {
+    "keywords": ["perpustakaan"],
+    "response": "Perpustakaan menyediakan ribuan buku & akses e-journal untuk riset 📖"
+  },
+  {
+    "keywords": ["wifi"],
+    "response": "Kampus menyediakan WiFi di setiap masing-masing gedung📶"
+  },
+  {
+    "keywords": ["parkir"],
+    "response": "Area parkir cukup luas untuk mahasiswa, motor maupun mobil 🛵🚗"
+  },
+  {
+    "keywords": [
+      "ada berapa gedung", "gedung di kampus", "sebutkan gedung di kampus", "gedung kampus"
+    ],
+    "response": "Kampus Utama UPB Tembesi memiliki 3 gedung utama: Gedung W, Gedung Y, dan Gedung S. Selain itu, pada Kampus UPB Nagoya Memiliki 1 Gedung Utama 🏢"
+  },
+  {
+    "keywords": [
+      "apakah ada website resmi universitas putera batam", "apakah ada website resmi kampus", "situs resmi universitas putera batam", "website kampus"
+    ],
+    "response": "Kampus Universitas Putera Batam memiliki website resmi di <a href=\"https://www.upbatam.ac.id\" target=\"_blank\" rel=\"noopener noreferrer\">https://www.upbatam.ac.id</a> 🌐"
+  },
+  {
+    "keywords": [
+      "apakah ada media sosial resmi universitas putera batam", "apakah ada media sosial resmi kampus", "media sosial resmi universitas putera batam", "media sosial kampus"
+    ],
+    "response": "Kampus Universitas Putera Batam memiliki beberapa media sosial resmi, antara lain: <br> Instagram: <a href=\"https://www.instagram.com/univputerabatam.official/\" target=\"_blank\" rel=\"noopener noreferrer\">@universitasputerabatam</a> <br> Facebook: <a href=\"https://www.facebook.com/univ.puterabatam\" target=\"_blank\" rel=\"noopener noreferrer\">Universitas Putera Batam</a> <br> YouTube: <a href=\"https://www.youtube.com/@Universitas_Putera_Batam\" target=\"_blank\" rel=\"noopener noreferrer\">Universitas Putera Batam</a> 📱"
+  },
+  {
+    "keywords": ["coding"],
+    "response": "Coding itu asik, bisa mulai dari hal sederhana sampai bikin startup 🚀"
+  },
+  {
+    "keywords": ["cinta"],
+    "response": "Hehehe.. boleh aja, asal jangan sampai lupa kuliah ya 😆"
+  },
+  {
+    "keywords": ["wiraswasta", "wirausaha", "entrepreneur"],
+    "response": "Banyak juga yang jadi entrepreneur sukses, bikin startup atau bisnis digital sendiri 🚀"
+  },
+  {
+    "keywords": ["lanjut studi", "lanjut kuliah", "studi lanjut"],
+    "response": "Banyak alumni yang lanjut S2 di dalam dan luar negeri, bahkan dapat beasiswa penuh 🎓"
+  },
+  {
+    "keywords": ["manipulasi nilai", "apakah ada manipulasi nilai?"],
+    "response": "Ya benar.. terdapat manipulasi nilai di kampus ini, tapi jangan ditiru ya! 😅"
+  },
+  {
+    "keywords": ["terimakasih", "terima kasih"],
+    "response": "Sama-sama! Senang bisa membantu 😊"
+  },
+  {
+    "keywords": [
+      "prospek kerja teknik informatika", "peluang kerja teknik informatika", "kerja setelah lulus teknik informatika", "karir lulusan teknik informatika"
+    ],
+    "response": "Lulusan Teknik Informatika memiliki prospek kerja yang sangat luas, seperti menjadi Software Developer, Web Developer, Data Analyst, IT Support, Network Engineer, hingga berkarir di bidang Artificial Intelligence dan Cyber Security. Banyak juga yang bekerja di perusahaan teknologi, startup, atau menjadi freelancer."
+  },
+  {
+    "keywords": [
+      "prospek kerja sistem informasi", "peluang kerja sistem informasi", "kerja setelah lulus sistem informasi", "karir lulusan sistem informasi"
+    ],
+    "response": "Lulusan Sistem Informasi dapat bekerja sebagai Business Analyst, System Analyst, Database Administrator, IT Consultant, Project Manager, atau di bidang pengembangan sistem informasi di perusahaan-perusahaan besar maupun startup."
+  },
+  {
+    "keywords": [
+      "prospek kerja teknik industri", "peluang kerja teknik industri", "kerja setelah lulus teknik industri", "karir lulusan teknik industri"
+    ],
+    "response": "Lulusan Teknik Industri memiliki peluang kerja di bidang manufaktur, quality control, supply chain management, perencanaan produksi, hingga menjadi konsultan industri dan wirausaha."
+  },
+  {
+    "keywords": [
+      "prospek kerja ilmu hukum", "peluang kerja ilmu hukum", "kerja setelah lulus ilmu hukum", "karir lulusan ilmu hukum"
+    ],
+    "response": "Lulusan Ilmu Hukum dapat berkarir sebagai advokat, notaris, jaksa, hakim, staf legal di perusahaan, konsultan hukum, maupun bekerja di lembaga pemerintahan dan swasta."
+  },
+  {
+    "keywords": [
+      "prospek kerja manajemen", "peluang kerja manajemen", "kerja setelah lulus manajemen", "karir lulusan manajemen"
+    ],
+    "response": "Lulusan Manajemen dapat bekerja di bidang perbankan, keuangan, pemasaran, sumber daya manusia, konsultan bisnis, hingga menjadi entrepreneur."
+  },
+  {
+    "keywords": [
+      "prospek kerja akuntansi", "peluang kerja akuntansi", "kerja setelah lulus akuntansi", "karir lulusan akuntansi"
+    ],
+    "response": "Lulusan Akuntansi banyak dibutuhkan sebagai akuntan publik, auditor, konsultan pajak, analis keuangan, staf keuangan di perusahaan, maupun di instansi pemerintah."
+  },
+  {
+    "keywords": [
+      "prospek kerja ilmu komunikasi", "peluang kerja ilmu komunikasi", "kerja setelah lulus ilmu komunikasi", "karir lulusan ilmu komunikasi"
+    ],
+    "response": "Lulusan Ilmu Komunikasi dapat berkarir sebagai public relations, jurnalis, penyiar, content creator, media planner, hingga bekerja di bidang periklanan dan komunikasi perusahaan."
+  },
+  {
+    "keywords": [
+      "prospek kerja sastra inggris", "peluang kerja sastra inggris", "kerja setelah lulus sastra inggris", "karir lulusan sastra inggris"
+    ],
+    "response": "Lulusan Sastra Inggris dapat bekerja sebagai penerjemah, interpreter, pengajar bahasa Inggris, penulis, editor, staf di perusahaan multinasional, atau di bidang pariwisata dan perhotelan."
+  },
+  {
+    "keywords": [
+      "prospek kerja sistem administrasi negara", "peluang kerja sistem administrasi negara", "kerja setelah lulus sistem administrasi negara", "karir lulusan sistem administrasi negara"
+    ],
+    "response": "Lulusan Sistem Administrasi Negara dapat bekerja di instansi pemerintahan, BUMN, organisasi non-profit, sebagai analis kebijakan publik, staf administrasi, atau konsultan tata kelola pemerintahan."
+  },
+  {
+    "keywords": [
+      "prospek kerja magister manajemen", "peluang kerja magister manajemen", "kerja setelah lulus magister manajemen", "karir lulusan magister manajemen"
+    ],
+    "response": "Lulusan Magister Manajemen memiliki peluang untuk menempati posisi manajerial di berbagai perusahaan, menjadi dosen, konsultan bisnis, atau wirausaha dengan cakupan yang lebih luas."
+  }
+]

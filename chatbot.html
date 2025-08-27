@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chatbot Maba Informatika</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #e5ddd5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .chat-container {
+      width: 400px;
+      height: 90vh;
+      background: #fff;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .chat-header {
+      background: #2563eb;
+      color: white;
+      padding: 12px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .chat-body {
+      flex: 1;
+      padding: 10px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      background: #ece5dd;
+    }
+
+    .msg {
+      display: flex;
+      align-items: flex-end;
+      max-width: 75%;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .msg.bot {
+      align-self: flex-start;
+    }
+
+    .msg.user {
+      align-self: flex-end;
+      flex-direction: row-reverse;
+    }
+
+    .bubble {
+      padding: 10px 14px;
+      border-radius: 16px;
+      margin: 2px;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .bot .bubble {
+      background: #fff;
+      color: #111;
+      border: 1px solid #ddd;
+      border-bottom-left-radius: 4px;
+    }
+
+    .user .bubble {
+      background: #2563eb;
+      color: #fff;
+      border-bottom-right-radius: 4px;
+    }
+
+    .avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      margin: 0 6px;
+    }
+
+    .chat-footer {
+      display: flex;
+      padding: 10px;
+      border-top: 1px solid #ddd;
+      background: #fff;
+      position: relative;
+    }
+
+    .chat-footer input {
+      flex: 1;
+      border: none;
+      padding: 10px;
+      border-radius: 20px;
+      outline: none;
+      background: #f0f0f0;
+    }
+
+    .chat-footer button {
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      margin-left: 8px;
+      cursor: pointer;
+      font-size: 18px;
+    }
+
+    #suggestions {
+      position: absolute;
+      left: 10px;
+      right: 58px;
+      bottom: 58px;
+      z-index: 10;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      background: #fff;
+      border-radius: 0 0 10px 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      max-height: 140px;
+      overflow-y: auto;
+      border: 1px solid #ddd;
+      display: none;
+      font-size: 14px;
+    }
+    #suggestions li {
+      padding: 10px 16px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    #suggestions li:hover, #suggestions li.active {
+      background: #e5f0ff;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+    
+    @media (max-width: 400px) {
+      .chat-container {
+        height: 100vh;
+        max-height: 100vh;
+        border-radius: 0;
+      }
+      .chat-header {
+        font-size: 14px;
+        padding: 10px;
+      }
+      .bubble {
+        font-size: 13px;
+        padding: 8px 12px;
+      }
+      .chat-footer input {
+        font-size: 13px;
+        padding: 10px;
+      } 
+    }
+
+    @media (max-width: 600px) {
+      .chat-container {
+        width: 100vw;
+        max-width: 100vw;
+        height: 100vh;
+        max-height: 100vh;
+        border-radius: 0;
+      }
+      .chat-header {
+        font-size: 14px;
+        padding: 10px;
+      }
+      .bubble {
+        font-size: 13px;
+        padding: 8px 12px;
+      }
+      .chat-footer input {
+        font-size: 13px;
+        padding: 10px;
+      }
+    }
+
+    .typing-dots::after {
+      content: '';
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      vertical-align: middle;
+      background: linear-gradient(90deg, #2563eb 33%, #fff0 0 66%, #2563eb 0);
+      background-size: 300% 100%;
+      animation: typing-dots 1s infinite linear;
+      border-radius: 50%;
+      margin-right: 6px;
+    }
+    @keyframes typing-dots {
+      0% {background-position: 0 0;}
+      100% {background-position: 100% 0;}
+    }
+  </style>
+</head>
+<body>
+  <div class="chat-container">
+    <div class="chat-header">🤖 UPBot</div>
+    <div class="chat-body" id="output">
+      <div class="msg bot">
+        <img src="https://imgs.search.brave.com/b79lgwBlZKV8jY_9zGLmYfMhOWa1IohzOscSbq4Q7nM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/a2licmlzcGRyLm9y/Zy9kYXRhLzExOC9k/b3dubG9hZC1sb2dv/LXVuaXZlcnNpdGFz/LXB1dGVyYS1iYXRh/bS0yLmpwZw" class="avatar">
+        <div class="bubble">Halo! Aku UPBot 👋 Tanyakan sesuatu tentang kampus, himpunan, atau kegiatan mahasiswa dan prospek kerja!</div>
+      </div>
+    </div>
+    <div class="chat-footer" style="position:relative;">
+      <input type="text" id="input" placeholder="Ketik pesan..." autocomplete="off" oninput="showSuggestions()" onkeypress="if(event.key==='Enter') chat()">
+      <button onclick="chat()">➤</button>
+      <ul id="suggestions"></ul>
+    </div>
+  </div>
+
+  <script>
+    // Tambahkan variabel global untuk data kampus
+    let kampusData = [];
+
+    // Load data keyword kampus dari file JSON saat halaman dimuat
+    fetch('kampus_keywords.json')
+      .then(response => response.json())
+      .then(data => { kampusData = data; });
+
+    // Daftar stopword sederhana Bahasa Indonesia
+    const stopwords = [
+      "yang", "dan", "di", "ke", "dari", "untuk", "apa", "itu", "ada", "pada", "dengan", "atau", "saja", "bagaimana", "tentang", "apakah", "adalah", "ini", "itu", "sebutkan", "wah", "kalau"
+    ];
+
+    // Fungsi stemming sederhana (menghapus imbuhan awalan/akhiran umum)
+    function stem(word) {
+      // Hapus awalan umum
+      word = word.replace(/^(meng|meny|mem|men|me|ber|ter|se|di|ke|pe|per)/, "");
+      // Hapus akhiran umum
+      word = word.replace(/(kan|an|i|nya|lah|ku|mu|pun)$/,"");
+      return word;
+    }
+
+    // Normalisasi kalimat: lowercase, hapus stopword, stemming
+    function normalize(text) {
+      return text
+        .toLowerCase()
+        .replace(/[^a-z0-9\s]/g, "") // hapus karakter non-alfanumerik
+        .split(/\s+/)
+        .filter(word => word && !stopwords.includes(word))
+        .map(stem)
+        .join(" ");
+    }
+
+    function cariJawabanKampus(input) {
+      const normInput = normalize(input);
+      // 1. Exact match
+      for (let item of kampusData) {
+        for (let keyword of item.keywords) {
+          const normKeyword = normalize(keyword);
+          if (normInput === normKeyword) {
+            return item.response;
+          }
+        }
+      }
+      // 2. Fallback: substring match
+      for (let item of kampusData) {
+        for (let keyword of item.keywords) {
+          const normKeyword = normalize(keyword);
+          if (normInput.includes(normKeyword)) {
+            return item.response;
+          }
+        }
+      }
+      return null;
+    }
+
+    function chat() {
+      let inputField = document.getElementById("input");
+      let input = inputField.value.toLowerCase().trim();
+      let output = document.getElementById("output");
+      let response = "";
+
+      if (!input) return;
+
+      // tampilkan pesan user
+      let userMsg = document.createElement("div");
+      userMsg.className = "msg user";
+      userMsg.innerHTML = `
+        <img src="https://cdn-icons-png.flaticon.com/512/1077/1077012.png" class="avatar">
+        <div class="bubble">${input}</div>
+      `;
+      output.appendChild(userMsg);
+
+      // tampilkan animasi mengetik
+      let typingMsg = document.createElement("div");
+      typingMsg.className = "msg bot";
+      typingMsg.id = "typing-indicator";
+      typingMsg.innerHTML = `
+        <img src="https://imgs.search.brave.com/b79lgwBlZKV8jY_9zGLmYfMhOWa1IohzOscSbq4Q7nM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/a2licmlzcGRyLm9y/Zy9kYXRhLzExOC9k/b3dubG9hZC1sb2dv/LXVuaXZlcnNpdGFz/LXB1dGVyYS1iYXRh/bS0yLmpwZw" class="avatar">
+        <div class="bubble"><span class="typing-dots"></span> UPBot sedang menyiapkan jawaban spesial untukmu...</div>
+      `;
+      output.appendChild(typingMsg);
+      output.scrollTop = output.scrollHeight;
+
+      // ============== LOGIKA OTOMATIS DENGAN NLP SEDERHANA ==============
+      let jawabanKampus = cariJawabanKampus(input);
+      if (jawabanKampus) {
+        response = jawabanKampus;
+      } else {
+        response = "Hmm... maaf, aku belum paham pertanyaanmu. Coba tanya yang lain ya! 😊";
+      }
+
+      inputField.value = "";
+
+      // Setelah delay, hapus animasi dan tampilkan balasan bot
+      setTimeout(() => {
+        let typingDiv = document.getElementById("typing-indicator");
+        if (typingDiv) typingDiv.remove();
+
+        let botMsg = document.createElement("div");
+        botMsg.className = "msg bot";
+        // Avatar bot selalu sama, tidak peduli ada <a> atau tidak
+        botMsg.innerHTML = `
+          <img src="https://imgs.search.brave.com/b79lgwBlZKV8jY_9zGLmYfMhOWa1IohzOscSbq4Q7nM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/a2licmlzcGRyLm9y/Zy9kYXRhLzExOC9k/b3dubG9hZC1sb2dv/LXVuaXZlcnNpdGFz/LXB1dGVyYS1iYXRh/bS0yLmpwZw" class="avatar">
+          <div class="bubble">${response}</div>
+        `;
+        output.appendChild(botMsg);
+        output.scrollTop = output.scrollHeight;
+      }, 900 + Math.min(response.length * 20, 2000)); // durasi animasi mengetik
+    }
+
+    // Ambil semua keyword unik dari JSON
+    function getAllKeywords() {
+      let all = [];
+      for (let item of kampusData) {
+        all = all.concat(item.keywords);
+      }
+      // Hilangkan duplikat
+      return [...new Set(all)];
+    }
+
+    // Tampilkan saran/autocomplete
+    function showSuggestions() {
+      let input = document.getElementById("input").value.toLowerCase();
+      let suggestions = document.getElementById("suggestions");
+      if (!input) {
+        suggestions.style.display = "none";
+        suggestions.innerHTML = "";
+        return;
+      }
+      let keywords = getAllKeywords();
+      let filtered = keywords.filter(k => k.toLowerCase().includes(input));
+      if (filtered.length === 0) {
+        suggestions.style.display = "none";
+        suggestions.innerHTML = "";
+        return;
+      }
+      suggestions.innerHTML = filtered.map((k, i) =>
+        `<li onclick="selectSuggestion('${k.replace(/'/g,"\\'")}')" tabindex="0">${k}</li>`
+      ).join("");
+      suggestions.style.display = "block";
+    }
+
+    // Ketika user klik saran
+    function selectSuggestion(text) {
+      document.getElementById("input").value = text;
+      document.getElementById("suggestions").style.display = "none";
+      chat();
+    }
+
+    // Sembunyikan saran jika klik di luar input/saran
+    document.addEventListener("click", function(e) {
+      if (!e.target.closest("#input") && !e.target.closest("#suggestions")) {
+        document.getElementById("suggestions").style.display = "none";
+      }
+    });
+
+    // Navigasi keyboard untuk suggestion (opsional)
+    document.getElementById("input").addEventListener("keydown", function(e) {
+      let suggestions = document.getElementById("suggestions");
+      if (suggestions.style.display === "block") {
+        let items = Array.from(suggestions.getElementsByTagName("li"));
+        let idx = items.findIndex(li => li.classList.contains("active"));
+        if (e.key === "ArrowDown") {
+          e.preventDefault();
+          if (idx >= 0) items[idx].classList.remove("active");
+          idx = (idx + 1) % items.length;
+          items[idx].classList.add("active");
+          items[idx].scrollIntoView({block: "nearest"});
+        } else if (e.key === "ArrowUp") {
+          e.preventDefault();
+          if (idx >= 0) items[idx].classList.remove("active");
+          idx = (idx - 1 + items.length) % items.length;
+          items[idx].classList.add("active");
+          items[idx].scrollIntoView({block: "nearest"});
+        } else if (e.key === "Enter" && idx >= 0) {
+          e.preventDefault();
+          items[idx].click();
+        }
+      }
+    });
+  </script>
+</body>
+</html>
