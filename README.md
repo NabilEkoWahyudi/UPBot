@@ -1,1 +1,1 @@
-
+UPBot dibuat sebagai chatbot berbasis web yang bertujuan untuk membantu mahasiswa baru Universitas Putera Batam dalam mendapatkan informasi seputar kampus, program studi, organisasi kemahasiswaan, fasilitas, serta prospek kerja setelah lulus
