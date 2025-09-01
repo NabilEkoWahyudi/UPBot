@@ -3,240 +3,733 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chatbot Maba Informatika</title>
+  <title>UPBot AI Assistant</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    body {
+    :root {
+      --primary-color: #2563eb;
+      --secondary-color: #3b82f6;
+      --background: #f8fafc;
+      --container-bg: #ffffff;
+      --text-primary: #1e293b;
+      --text-secondary: #64748b;
+      --border-color: #e2e8f0;
+      --shadow: rgba(0, 0, 0, 0.05);
+      --card-bg: #ffffff;
+      --input-bg: #f1f5f9;
+    }
+
+    [data-theme="dark"] {
+      --background: #0f172a;
+      --container-bg: #1e293b;
+      --text-primary: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --border-color: #334155;
+      --shadow: rgba(0, 0, 0, 0.2);
+      --card-bg: #1e293b;
+      --input-bg: #334155;
+    }
+
+    * {
       margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #e5ddd5;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background-color: var(--background);
+      color: var(--text-primary);
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
+      transition: background-color 0.3s ease;
+      padding: 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1000px;
+    }
+
+    .header {
+      margin-bottom: 30px;
+      padding: 0 10px;
+      animation: fadeInDown 0.6s ease-out;
+    }
+
+    .greeting h1 {
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 5px;
+    }
+
+    .greeting p {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .quick-actions {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .action-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 20px;
+      border: 1px solid var(--border-color);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      box-shadow: 0 4px 10px var(--shadow);
+      height: 100%;
+      animation: fadeInUp 0.6s ease-out;
+      animation-fill-mode: both;
+    }
+
+    .action-card:nth-child(1) { animation-delay: 0.1s; }
+    .action-card:nth-child(2) { animation-delay: 0.2s; }
+    .action-card:nth-child(3) { animation-delay: 0.3s; }
+    .action-card:nth-child(4) { animation-delay: 0.4s; }
+    .action-card:nth-child(5) { animation-delay: 0.5s; }
+    .action-card:nth-child(6) { animation-delay: 0.6s; }
+
+    .action-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px var(--shadow);
+      border-color: var(--primary-color);
+    }
+
+    .action-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      background: rgba(37, 99, 235, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 15px;
+      color: var(--primary-color);
+      font-size: 20px;
+      transition: transform 0.3s ease;
+    }
+
+    .action-card:hover .action-icon {
+      transform: scale(1.1);
+    }
+
+    .action-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+    }
+
+    .action-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.5;
     }
 
     .chat-container {
-      width: 400px;
-      height: 90vh;
-      background: #fff;
-      border-radius: 10px;
+      background: var(--container-bg);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px var(--shadow);
+      border: 1px solid var(--border-color);
       display: flex;
       flex-direction: column;
-      overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      height: 65vh;
+      animation: scaleIn 0.5s ease-out;
     }
 
     .chat-header {
-      background: #2563eb;
+      padding: 20px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--container-bg);
+    }
+
+    .chat-title {
+      font-size: 18px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .chat-close {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--input-bg);
+      color: var(--text-primary);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .chat-close:hover {
+      background: #ef4444;
       color: white;
-      padding: 12px;
-      font-weight: bold;
-      text-align: center;
+      transform: rotate(90deg);
     }
 
     .chat-body {
       flex: 1;
-      padding: 10px;
+      padding: 20px;
       overflow-y: auto;
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      background: #ece5dd;
+      gap: 15px;
+      background: var(--background);
     }
 
-    .msg {
+    .message {
       display: flex;
       align-items: flex-end;
-      max-width: 75%;
-      animation: fadeIn 0.3s ease;
+      max-width: 80%;
+      animation: messageAppear 0.3s ease-out;
+      animation-fill-mode: both;
     }
 
-    .msg.bot {
+    .message.bot {
       align-self: flex-start;
     }
 
-    .msg.user {
+    .message.user {
       align-self: flex-end;
       flex-direction: row-reverse;
     }
 
-    .bubble {
-      padding: 10px 14px;
-      border-radius: 16px;
-      margin: 2px;
-      font-size: 14px;
-      line-height: 1.4;
+    .avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      margin: 0 10px;
+      object-fit: cover;
+      transition: transform 0.3s ease;
     }
 
-    .bot .bubble {
-      background: #fff;
-      color: #111;
-      border: 1px solid #ddd;
+    .message:hover .avatar {
+      transform: scale(1.1);
+    }
+
+    .message-content {
+      padding: 12px 16px;
+      border-radius: 18px;
+      font-size: 15px;
+      line-height: 1.4;
+      box-shadow: 0 2px 5px var(--shadow);
+      transition: transform 0.2s ease;
+    }
+
+    .message:hover .message-content {
+      transform: scale(1.02);
+    }
+
+    .bot .message-content {
+      background: var(--container-bg);
+      color: var(--text-primary);
       border-bottom-left-radius: 4px;
     }
 
-    .user .bubble {
-      background: #2563eb;
-      color: #fff;
+    .user .message-content {
+      background: var(--primary-color);
+      color: white;
       border-bottom-right-radius: 4px;
     }
 
-    .avatar {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      margin: 0 6px;
-    }
-
     .chat-footer {
+      padding: 15px 20px;
+      border-top: 1px solid var(--border-color);
+      background: var(--container-bg);
       display: flex;
-      padding: 10px;
-      border-top: 1px solid #ddd;
-      background: #fff;
+      gap: 10px;
       position: relative;
     }
 
-    .chat-footer input {
+    .chat-input {
       flex: 1;
-      border: none;
-      padding: 10px;
+      padding: 12px 16px;
       border-radius: 20px;
-      outline: none;
-      background: #f0f0f0;
+      border: 1px solid var(--border-color);
+      background: var(--input-bg);
+      color: var(--text-primary);
+      font-size: 15px;
+      transition: all 0.3s ease;
     }
 
-    .chat-footer button {
-      background: #2563eb;
+    .chat-input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    .chat-send {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--primary-color);
       color: white;
       border: none;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      margin-left: 8px;
       cursor: pointer;
-      font-size: 18px;
+      transition: all 0.3s ease;
+    }
+
+    .chat-send:hover {
+      background: var(--secondary-color);
+      transform: scale(1.05) rotate(10deg);
     }
 
     #suggestions {
       position: absolute;
-      left: 10px;
-      right: 58px;
-      bottom: 58px;
-      z-index: 10;
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      background: #fff;
-      border-radius: 0 0 10px 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-      max-height: 140px;
+      bottom: 65px;
+      left: 20px;
+      right: 20px;
+      background: var(--container-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      max-height: 150px;
       overflow-y: auto;
-      border: 1px solid #ddd;
+      z-index: 100;
+      box-shadow: 0 5px 15px var(--shadow);
       display: none;
-      font-size: 14px;
+      animation: fadeInUp 0.2s ease-out;
     }
+
     #suggestions li {
-      padding: 10px 16px;
+      padding: 10px 15px;
       cursor: pointer;
-      transition: background 0.15s;
-    }
-    #suggestions li:hover, #suggestions li.active {
-      background: #e5f0ff;
-    }
-
-    @keyframes fadeIn {
-      from {opacity: 0; transform: translateY(10px);}
-      to {opacity: 1; transform: translateY(0);}
-    }
-    
-    @media (max-width: 400px) {
-      .chat-container {
-        height: 100vh;
-        max-height: 100vh;
-        border-radius: 0;
-      }
-      .chat-header {
-        font-size: 14px;
-        padding: 10px;
-      }
-      .bubble {
-        font-size: 13px;
-        padding: 8px 12px;
-      }
-      .chat-footer input {
-        font-size: 13px;
-        padding: 10px;
-      } 
+      list-style: none;
+      border-bottom: 1px solid var(--border-color);
+      transition: background-color 0.2s;
     }
 
-    @media (max-width: 600px) {
-      .chat-container {
-        width: 100vw;
-        max-width: 100vw;
-        height: 100vh;
-        max-height: 100vh;
-        border-radius: 0;
-      }
-      .chat-header {
-        font-size: 14px;
-        padding: 10px;
-      }
-      .bubble {
-        font-size: 13px;
-        padding: 8px 12px;
-      }
-      .chat-footer input {
-        font-size: 13px;
-        padding: 10px;
-      }
+    #suggestions li:hover {
+      background-color: var(--input-bg);
     }
 
-    .typing-dots::after {
-      content: '';
-      display: inline-block;
-      width: 1em;
-      height: 1em;
-      vertical-align: middle;
-      background: linear-gradient(90deg, #2563eb 33%, #fff0 0 66%, #2563eb 0);
-      background-size: 300% 100%;
-      animation: typing-dots 1s infinite linear;
+    #suggestions li:last-child {
+      border-bottom: none;
+    }
+
+    .typing-indicator {
+      display: flex;
+      padding: 12px 16px;
+      align-items: center;
+    }
+
+    .typing-dots {
+      display: flex;
+      align-items: center;
+      height: 20px;
+    }
+
+    .typing-dots span {
+      height: 8px;
+      width: 8px;
+      background: var(--text-secondary);
       border-radius: 50%;
-      margin-right: 6px;
+      display: inline-block;
+      margin: 0 2px;
+      opacity: 0.6;
+      animation: bounce 1.3s infinite ease-in-out;
     }
-    @keyframes typing-dots {
-      0% {background-position: 0 0;}
-      100% {background-position: 100% 0;}
+
+    .typing-dots span:nth-child(1) {
+      animation-delay: 0s;
+    }
+
+    .typing-dots span:nth-child(2) {
+      animation-delay: 0.15s;
+    }
+
+    .typing-dots span:nth-child(3) {
+      animation-delay: 0.3s;
+    }
+
+    @keyframes bounce {
+      0%, 80%, 100% {
+        transform: translateY(0);
+        opacity: 0.6;
+      }
+      40% {
+        transform: translateY(-5px);
+        opacity: 1;
+      }
+    }
+
+    .theme-toggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--primary-color);
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+      z-index: 100;
+      border: none;
+      transition: all 0.3s ease;
+    }
+
+    .theme-toggle:hover {
+      transform: scale(1.1) rotate(15deg);
+    }
+
+    /* Animasi kustom */
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes scaleIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes messageAppear {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Animasi untuk elemen yang muncul satu per satu */
+    .stagger-item {
+      opacity: 0;
+      transform: translateY(10px);
+      animation: fadeInUp 0.5s ease-out forwards;
+    }
+
+    @media (max-width: 768px) {
+      .quick-actions {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .message {
+        max-width: 90%;
+      }
+      
+      .chat-container {
+        height: 70vh;
+      }
+    }
+
+    /* Scrollbar styling */
+    .chat-body::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .chat-body::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .chat-body::-webkit-scrollbar-thumb {
+      background: var(--border-color);
+      border-radius: 3px;
+    }
+
+    .chat-body::-webkit-scrollbar-thumb:hover {
+      background: var(--primary-color);
+    }
+
+    #suggestions::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    #suggestions::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    #suggestions::-webkit-scrollbar-thumb {
+      background: var(--border-color);
+      border-radius: 3px;
     }
   </style>
 </head>
 <body>
-  <div class="chat-container">
-    <div class="chat-header">🤖 UPBot</div>
-    <div class="chat-body" id="output">
-      <div class="msg bot">
-        <img src="https://imgs.search.brave.com/b79lgwBlZKV8jY_9zGLmYfMhOWa1IohzOscSbq4Q7nM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/a2licmlzcGRyLm9y/Zy9kYXRhLzExOC9k/b3dubG9hZC1sb2dv/LXVuaXZlcnNpdGFz/LXB1dGVyYS1iYXRh/bS0yLmpwZw" class="avatar">
-        <div class="bubble">Halo! Aku UPBot 👋 Tanyakan sesuatu tentang kampus, himpunan, atau kegiatan mahasiswa dan prospek kerja!</div>
+  <div class="container">
+    <div class="header">
+      <div class="greeting">
+        <h1 id="greeting-text">Selamat Pagi, Mahasiswa</h1>
+        <p>Ada yang bisa saya bantu hari ini?</p>
       </div>
     </div>
-    <div class="chat-footer" style="position:relative;">
-      <input type="text" id="input" placeholder="Ketik pesan..." autocomplete="off" oninput="showSuggestions()" onkeypress="if(event.key==='Enter') chat()">
-      <button onclick="chat()">➤</button>
-      <ul id="suggestions"></ul>
+
+    <div class="quick-actions">
+      <div class="action-card" onclick="askQuestion('Apa itu Universitas Putera Batam?')">
+        <div class="action-icon">
+          <i class="fas fa-university"></i>
+        </div>
+        <div class="action-title">Tentang Kampus</div>
+        <div class="action-desc">Informasi lengkap tentang Universitas Putera Batam</div>
+      </div>
+      
+      <div class="action-card" onclick="askQuestion('Jurusan apa saja yang ada?')">
+        <div class="action-icon">
+          <i class="fas fa-book"></i>
+        </div>
+        <div class="action-title">Info Jurusan</div>
+        <div class="action-desc">Program studi yang tersedia di UPB</div>
+      </div>
+      
+      <div class="action-card" onclick="askQuestion('Bagaimana cara daftar kuliah?')">
+        <div class="action-icon">
+          <i class="fas fa-edit"></i>
+        </div>
+        <div class="action-title">Pendaftaran</div>
+        <div class="action-desc">Prosedur pendaftaran mahasiswa baru</div>
+      </div>
+      
+      <div class="action-card" onclick="askQuestion('Berapa biaya kuliah?')">
+        <div class="action-icon">
+          <i class="fas fa-money-bill-wave"></i>
+        </div>
+        <div class="action-title">Biaya Kuliah</div>
+        <div class="action-desc">Informasi biaya pendidikan di UPB</div>
+      </div>
+      
+      <div class="action-card" onclick="askQuestion('Apakah tersedia Beasiswa?')">
+        <div class="action-icon">
+          <i class="fas fa-graduation-cap"></i>
+        </div>
+        <div class="action-title">Beasiswa</div>
+        <div class="action-desc">Informasi beasiswa yang tersedia di UPB</div>
+      </div>
+      
+      <div class="action-card" onclick="askQuestion('Bagaimana Prospek kerja setelah lulus?')">
+        <div class="action-icon">
+          <i class="fas fa-briefcase"></i>
+        </div>
+        <div class="action-title">Prospek Kerja</div>
+        <div class="action-desc">Peluang karir setelah lulus dari UPB</div>
+      </div>
+    </div>
+
+    <div class="chat-container" id="chatContainer">
+      <div class="chat-header">
+        <div class="chat-title">
+          <i class="fas fa-robot"></i>
+          <span>UPBot Assistant</span>
+        </div>
+        <div class="chat-close" onclick="closeChat()">
+          <i class="fas fa-times"></i>
+        </div>
+      </div>
+      <div class="chat-body" id="chatBody">
+        <div class="message bot">
+          <img src="https://imgs.search.brave.com/b79lgwBlZKV8jY_9zGLmYfMhOWa1IohzOscSbq4Q7nM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/a2licmlzcGRyLm9y/Zy9kYXRhLzExOC9k/b3dubG9hZC1sb2dv/LXVuaXZlcnNpdGFz/LXB1dGVyYS1iYXRh/bS0yLmpwZw" class="avatar">
+          <div class="message-content">
+            Halo! Saya UPBot AI Assistant 🤖<br>
+            Ada yang bisa saya bantu tentang Universitas Putera Batam?
+          </div>
+        </div>
+      </div>
+      <div class="chat-footer">
+        <input type="text" class="chat-input" id="chatInput" placeholder="Ketik pesan..." autocomplete="off" oninput="showSuggestions()" onkeypress="if(event.key==='Enter') sendMessage()">
+        <button class="chat-send" onclick="sendMessage()">
+          <i class="fas fa-paper-plane"></i>
+        </button>
+        <ul id="suggestions"></ul>
+      </div>
     </div>
   </div>
 
+  <button class="theme-toggle" onclick="toggleTheme()">
+    <i class="fas fa-moon" id="themeIcon"></i>
+  </button>
+
   <script>
-    // Tambahkan variabel global untuk data kampus
+    // Database jawaban untuk quick responses (dari kode awal yang dikirim)
+    const responses = {
+      'Apa itu Universitas Putera Batam?': `
+          🏫 <strong>Universitas Putera Batam (UPB)</strong> adalah perguruan tinggi swasta yang berlokasi di Batam, Kepulauan Riau. 
+          <br><br>
+          ✨ <strong>Keunggulan UPB:</strong><br>
+          • Terakreditasi B (Baik) dari BAN-PT<br>
+          • Fasilitas lengkap<br>
+          • Dosen berpengalaman dan berkualitas<br>
+          • Lokasi strategis di pusat kota Batam<br>
+          • Kerjasama dengan industri lokal dan internasional<br>
+          • Program magang dan praktek kerja yang luas
+      `,
+      
+      'Jurusan apa saja yang ada?': `
+          📚 <strong>Program Studi di Universitas Putera Batam:</strong>
+          <br><br>
+          🎓 <strong>Fakultas Teknik:</strong><br>
+          • Teknik Informatika (S1)<br>
+          • Sistem Informasi (S1)<br>
+          • Teknik Industri (S1)<br>
+          <br>
+          💼 <strong>Fakultas Ilmu Sosial dan Humaniora:</strong><br>
+          • Manajemen (S1)<br>
+          • Akuntansi (S1)<br>
+          • Ilmu Hukum (S1)<br>
+          • Ilmu Komunikasi (S1)<br>
+          • Sistem Administrasi Negara (S1)<br>
+          • Sastra Inggris (S1)<br>
+          • Magister Manajemen (S2)
+      `,
+      
+      'Bagaimana cara daftar kuliah?': `
+          📝 <strong>Cara Pendaftaran Mahasiswa Baru UPB:</strong>
+          <br><br>
+          🔹 <strong>Pendaftaran Online:</strong><br>
+          1. Kunjungi website resmi UPB<br>
+          2. Isi formulir pendaftaran online<br>
+          3. Upload dokumen yang diperlukan<br>
+          4. Bayar biaya pendaftaran<br>
+          <br>
+          🎓 <strong>Prosedur Penerimaan Mahasiswa Baru:</strong><br>
+          • Prosedur Penerimaan Mahasiswa Baru untuk Program Sarjana dan Program Pasca Sarjana, untuk lebih lanjut dapat Melalui Website Resmi<br>
+          <br>
+          📋 <strong>Dokumen yang diperlukan:</strong><br>
+          • Ijazah SMA/SMK/MA (asli & fotocopy)<br>
+          • Apabila jika ijazah belum keluar maka dapat gunakan, Transkrip nilai (asli & fotocopy)<br>
+          • Pas foto 3x4 (6 lembar)<br>
+          • Fotocopy KTP & Kartu Keluarga<br>
+          • Surat pernyataan bermaterai<br>
+          <br>
+          📎 <strong>Pendaftaran & Seleksi Calon Mahasiswa Baru:</strong><br>
+          • Pendaftaran dapat dilakukan online melalui laman pendaftaran resmi yakni daftar.upbatam.ac.id, atau secara langsung dengan datang ke kampus Utama Tembesi<br>
+          • Seleksi dilakukan melalui Tes Potensi Akademik (TPA) yang diadakan di dapat diikuti secara online maupun offline<br>
+          • Calon mahasiswa mengikuti Tes Potensi Akademik (TPA) yang mencakup materi Bahasa Indonesia, Matematika, dan Bahasa Inggris.<br>
+          <br>
+          📑 <strong>Prosedur Registrasi Setelah Dinyatakan Lulus Seleksi:</strong><br>
+          • Pengumuman kelulusan seleksi akan diumumkan melalui website resmi UPB<br>
+          • Calon mahasiswa yang dinyatakan lulus wajib melakukan registrasi ulang dengan melengkapi dokumen yang diperlukan<br>
+          • Pembayaran Biaya Registrasi via e-Payment setelah berkas disetujui Melalui website resmi E-Payment UPB  <a href=\"https://payment.upbatam.ac.id/" target=\"_blank\" rel=\"noopener noreferrer\">https://payment.upbatam.ac.id/</a> 🌐"<br>
+          • Pengambilan jaket & almamater di kampus, dengan menyerahkan berkas fisik: Ijazah, SKHU, KK, dan Surat Pernyataan<br>
+          <br>
+
+          📞 <strong>Info lebih lanjut:</strong><br>
+          Instagram: <a href=\"https://www.instagram.com/univputerabatam.official/\" target=\"_blank\" rel=\"noopener noreferrer\">@universitasputerabatam</a><br>
+          Facebook: <a href=\"https://www.facebook.com/univ.puterabatam\" target=\"_blank\" rel=\"noopener noreferrer\">Universitas Putera Batam</a><br>
+      `,
+      
+      'Berapa biaya kuliah?': `
+          💰 <strong>Informasi Biaya Kuliah UPB :</strong>
+          <br><br>
+          Biaya kuliah atau UKT Selama 1 semester berbeda-beda tergantung program studi yang diambil, kelas yang diambil dan lokasi kampus yang dipilih.<br>
+          Selengkapnya dapat dilihat melalui Website resmi Universitas Putera Batam: 
+          <a href=\"https://upbatam.ac.id/Biaya_Pendidikan\" target=\"_blank\" rel=\"noopener noreferrer\">https://upbatam.ac.id/Biaya_Pendidikan</a> 🌐"
+          ⚠️ <strong>Catatan:</strong> Biaya dapat berubah setiap tahunnya. 
+          Untuk informasi biaya terbaru, dapat dilihat melalui Website resmi.
+      `,
+      
+      'Apakah tersedia Beasiswa?': `
+          🎓 <strong>Tentu saja ada dong</strong>
+          <br><br>
+          🏆 <strong>Beasiswa Prestasi PAKTW:</strong><br>
+          • Beasiswa 100% free/gratis biaya kuliah selama 7 semester<br>
+          • Berlaku untuk lulusan Tahun 2023, 2024, 2025<br>
+          • Pendaftaran s.d. 15 Maret 2025<br>
+          <br>
+          🎖️ <strong>Beasiswa OSIS:</strong><br>
+          • Diskon 50% dari biaya registrasi<br>
+          • Dikhususkan bagi pengurus OSIS semasa SMA/SMK/MA<br>
+          • Nilai rata-rata sekolah min. 8.0 atau GAC Grade Point Average (GPA) minimal 2.0<br>
+          • Siswa/i tamatan tahun 2025 (fresh graduate)<br>
+          • Lulus Tes Potensi Akademik Universitas Putera Batam atau nilai rata-rata UTBK > 450<br>
+          • Surat Rekomendasi dari Sekolah<br>
+          <br>
+          💼 <strong>Beasiswa GERAK CEPAT Early Bird Registration:</strong><br>
+          • Berlaku Untuk Pembelian Form Pendaftaran pada Periode OKTOBER 2024<br>
+          • Umur < 20 tahun<br>
+          • Lulus Tes Potensi Akademik Universitas Putera Batam<br>
+          <br>
+
+          <strong>Dan masih banyak lagi Beasiswa yang bisa kamu dapatkan</strong><br>
+
+          📌 <strong>Syarat & Ketentuan:</strong><br>
+         Bisa dilihat di website resmi UPB ya!
+       <a href=\"https://www.upbatam.ac.id/beasiswa%7Ca87ff679a2f3e71d9181a67b7542122c\" target=\"_blank\" rel=\"noopener noreferrer\">https://www.upbatam.ac.id/beasiswa_upb</a> 🌐"
+      `,
+      
+      'Bagaimana Prospek kerja setelah lulus?': `
+      <strong>Prospek kerja setelah Lulus dari Universitas Putera Batam</strong>
+      <br><br>
+Setiap jurusan atau program studi di Universitas Putera Batam memiliki peluang kerja atau prospek karir yang beragam sesuai bidangnya. Berikut penjelasan singkat prospek kerja setelah lulus berdasarkan masing-masing prodi:<br><br>1. Magister Manajemen:<br>&nbsp;&nbsp;- Posisi Manajerial<br>&nbsp;&nbsp;- Dosen<br>&nbsp;&nbsp;- Konsultan Bisnis<br>&nbsp;&nbsp;- Wirausaha<br><br>2. Sistem Administrasi Negara:<br>&nbsp;&nbsp;- Instansi Pemerintahan<br>&nbsp;&nbsp;- BUMN<br>&nbsp;&nbsp;- Organisasi Non-Profit<br>&nbsp;&nbsp;- Analis Kebijakan Publik<br>&nbsp;&nbsp;- Staf Administrasi<br>&nbsp;&nbsp;- Konsultan Tata Kelola Pemerintahan<br><br>3. Sastra Inggris:<br>&nbsp;&nbsp;- Penerjemah<br>&nbsp;&nbsp;- Interpreter<br>&nbsp;&nbsp;- Pengajar Bahasa Inggris<br>&nbsp;&nbsp;- Penulis<br>&nbsp;&nbsp;- Editor<br>&nbsp;&nbsp;- Staf perusahaan multinasional<br>&nbsp;&nbsp;- Pariwisata dan Perhotelan<br><br>4. Ilmu Komunikasi:<br>&nbsp;&nbsp;- Public Relations<br>&nbsp;&nbsp;- Jurnalis<br>&nbsp;&nbsp;- Penyiar<br>&nbsp;&nbsp;- Content Creator<br>&nbsp;&nbsp;- Media Planner<br>&nbsp;&nbsp;- Periklanan<br>&nbsp;&nbsp;- Komunikasi Perusahaan<br><br>5. Akuntansi:<br>&nbsp;&nbsp;- Akuntan Publik<br>&nbsp;&nbsp;- Auditor<br>&nbsp;&nbsp;- Konsultan Pajak<br>&nbsp;&nbsp;- Analis Keuangan<br>&nbsp;&nbsp;- Staf Keuangan Perusahaan<br>&nbsp;&nbsp;- Instansi Pemerintah<br><br>6. Manajemen:<br>&nbsp;&nbsp;- Perbankan<br>&nbsp;&nbsp;- Keuangan<br>&nbsp;&nbsp;- Pemasaran<br>&nbsp;&nbsp;- Sumber Daya Manusia<br>&nbsp;&nbsp;- Konsultan Bisnis<br>&nbsp;&nbsp;- Entrepreneur<br><br>7. Ilmu Hukum:<br>&nbsp;&nbsp;- Advokat<br>&nbsp;&nbsp;- Notaris<br>&nbsp;&nbsp;- Jaksa<br>&nbsp;&nbsp;- Hakim<br>&nbsp;&nbsp;- Staf legal perusahaan<br>&nbsp;&nbsp;- Konsultan hukum<br>&nbsp;&nbsp;- Lembaga pemerintahan dan swasta<br><br>8. Teknik Industri:<br>&nbsp;&nbsp;- Manufaktur<br>&nbsp;&nbsp;- Quality Control<br>&nbsp;&nbsp;- Supply Chain Management<br>&nbsp;&nbsp;- Perencanaan Produksi<br>&nbsp;&nbsp;- Konsultan Industri<br>&nbsp;&nbsp;- Wirausaha<br><br>9. Sistem Informasi:<br>&nbsp;&nbsp;- Business Analyst<br>&nbsp;&nbsp;- System Analyst<br>&nbsp;&nbsp;- Database Administrator<br>&nbsp;&nbsp;- IT Consultant<br>&nbsp;&nbsp;- Project Manager<br>&nbsp;&nbsp;- Pengembangan sistem informasi di perusahaan<br><br>10. Teknik Informatika:<br>&nbsp;&nbsp;- Software Developer<br>&nbsp;&nbsp;- Web Developer<br>&nbsp;&nbsp;- Data Analyst<br>&nbsp;&nbsp;- IT Support<br>&nbsp;&nbsp;- Network Engineer<br>&nbsp;&nbsp;- Artificial Intelligence<br>&nbsp;&nbsp;- Cyber Security<br><br>
+      `,
+      
+      'default': `
+        Maaf, saya belum memahami pertanyaan Anda. Silakan tanyakan hal lain tentang Universitas Putera Batam.
+        <br><br>
+        Anda bisa menanyakan tentang:<br>
+        • Informasi kampus<br>
+        • Program studi<br>
+        • Pendaftaran mahasiswa<br>
+        • Biaya kuliah<br>
+        • Beasiswa<br>
+        • Prospek kerja lulusan
+      `
+    };
+
+    // Variabel global untuk data kampus
     let kampusData = [];
 
     // Load data keyword kampus dari file JSON saat halaman dimuat
     fetch('kampus_keywords.json')
       .then(response => response.json())
-      .then(data => { kampusData = data; });
+      .then(data => { 
+        kampusData = data; 
+        console.log('Data kampus loaded:', kampusData);
+      })
+      .catch(error => {
+        console.log('File kampus_keywords.json tidak ditemukan, menggunakan fallback keywords');
+        // Fallback jika file JSON tidak ada
+        kampusData = [];
+      });
 
     // Daftar stopword sederhana Bahasa Indonesia
     const stopwords = [
-      "yang", "dan", "di", "ke", "dari", "untuk", "apa", "itu", "ada", "pada", "dengan", "atau", "saja", "bagaimana", "tentang", "apakah", "adalah", "ini", "itu", "sebutkan", "wah", "kalau"
+      "yang", "dan", "di", "ke", "dari", "untuk", "apa", "itu", "ada", "pada", "dengan", "atau", "saja", "bagaimana", "tentang", "apakah", "adalah", "ini", "itu", "sebutkan", "wah", "kalau", "lantas"
     ];
 
     // Fungsi stemming sederhana (menghapus imbuhan awalan/akhiran umum)
@@ -261,7 +754,15 @@
 
     function cariJawabanKampus(input) {
       const normInput = normalize(input);
-      // 1. Exact match
+      
+      // 1. Cek dulu apakah ini adalah pertanyaan dari quick response
+      for (let question in responses) {
+        if (input.toLowerCase().includes(question.toLowerCase()) || question.toLowerCase().includes(input.toLowerCase())) {
+          return responses[question];
+        }
+      }
+      
+      // 2. Cari di kampusData dari JSON (untuk auto-suggestion keywords)
       for (let item of kampusData) {
         for (let keyword of item.keywords) {
           const normKeyword = normalize(keyword);
@@ -270,78 +771,121 @@
           }
         }
       }
-      // 2. Fallback: substring match
+      
+      // 3. Fallback: substring match di kampusData
       for (let item of kampusData) {
         for (let keyword of item.keywords) {
           const normKeyword = normalize(keyword);
-          if (normInput.includes(normKeyword)) {
+          if (normInput.includes(normKeyword) || normKeyword.includes(normInput)) {
             return item.response;
           }
         }
       }
+      
       return null;
     }
 
-    function chat() {
-      let inputField = document.getElementById("input");
-      let input = inputField.value.toLowerCase().trim();
-      let output = document.getElementById("output");
-      let response = "";
-
-      if (!input) return;
-
-      // tampilkan pesan user
-      let userMsg = document.createElement("div");
-      userMsg.className = "msg user";
-      userMsg.innerHTML = `
-        <img src="https://cdn-icons-png.flaticon.com/512/1077/1077012.png" class="avatar">
-        <div class="bubble">${input}</div>
-      `;
-      output.appendChild(userMsg);
-
-      // tampilkan animasi mengetik
-      let typingMsg = document.createElement("div");
-      typingMsg.className = "msg bot";
-      typingMsg.id = "typing-indicator";
-      typingMsg.innerHTML = `
-        <img src="https://imgs.search.brave.com/b79lgwBlZKV8jY_9zGLmYfMhOWa1IohzOscSbq4Q7nM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/a2licmlzcGRyLm9y/Zy9kYXRhLzExOC9k/b3dubG9hZC1sb2dv/LXVuaXZlcnNpdGFz/LXB1dGVyYS1iYXRh/bS0yLmpwZw" class="avatar">
-        <div class="bubble"><span class="typing-dots"></span> UPBot sedang menyiapkan jawaban spesial untukmu...</div>
-      `;
-      output.appendChild(typingMsg);
-      output.scrollTop = output.scrollHeight;
-
-      // ============== LOGIKA OTOMATIS DENGAN NLP SEDERHANA ==============
-      let jawabanKampus = cariJawabanKampus(input);
-      if (jawabanKampus) {
-        response = jawabanKampus;
+    // Set greeting based on time of day
+    function setGreeting() {
+      const hour = new Date().getHours();
+      const greetingElement = document.getElementById('greeting-text');
+      
+      if (hour < 12) {
+        greetingElement.textContent = 'Selamat Pagi, Mahasiswa';
+      } else if (hour < 15) {
+        greetingElement.textContent = 'Selamat Siang, Mahasiswa';
+      } else if (hour < 19) {
+        greetingElement.textContent = 'Selamat Sore, Mahasiswa';
       } else {
-        response = "Hmm... maaf, aku belum paham pertanyaanmu. Coba tanya yang lain ya! 😊";
+        greetingElement.textContent = 'Selamat Malam, Mahasiswa';
       }
-
-      inputField.value = "";
-
-      // Setelah delay, hapus animasi dan tampilkan balasan bot
-      setTimeout(() => {
-        let typingDiv = document.getElementById("typing-indicator");
-        if (typingDiv) typingDiv.remove();
-
-        let botMsg = document.createElement("div");
-        botMsg.className = "msg bot";
-        // Avatar bot selalu sama, tidak peduli ada <a> atau tidak
-        botMsg.innerHTML = `
-          <img src="https://imgs.search.brave.com/b79lgwBlZKV8jY_9zGLmYfMhOWa1IohzOscSbq4Q7nM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/a2licmlzcGRyLm9y/Zy9kYXRhLzExOC9k/b3dubG9hZC1sb2dv/LXVuaXZlcnNpdGFz/LXB1dGVyYS1iYXRh/bS0yLmpwZw" class="avatar">
-          <div class="bubble">${response}</div>
-        `;
-        output.appendChild(botMsg);
-        output.scrollTop = output.scrollHeight;
-      }, 900 + Math.min(response.length * 20, 2000)); // durasi animasi mengetik
     }
 
-    // Ambil semua keyword unik dari JSON
+    function askQuestion(question) {
+      // Buka chat container jika belum terbuka
+      document.getElementById('chatContainer').style.display = 'flex';
+      
+      // Tampilkan pertanyaan user
+      addMessage(question, 'user');
+      
+      // Tampilkan indikator mengetik
+      const typingIndicator = document.createElement('div');
+      typingIndicator.className = 'message bot';
+      typingIndicator.id = 'typing-indicator';
+      typingIndicator.innerHTML = `
+        <img src="https://imgs.search.brave.com/b79lgwBlZKV8jY_9zGLmYfMhOWa1IohzOscSbq4Q7nM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/a2licmlzcGRyLm9y/Zy9kYXRhLzExOC9k/b3dubG9aZC1sb2dv/LXVuaXZlcnNpdGFz/LXB1dGVyYS1iYXRh/bS0yLmpwZw" class="avatar">
+        <div class="message-content typing-indicator">
+          <div class="typing-dots">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          UPBot sedang mengetik...
+        </div>
+      `;
+      document.getElementById('chatBody').appendChild(typingIndicator);
+      document.getElementById('chatBody').scrollTop = document.getElementById('chatBody').scrollHeight;
+      
+      // Cari jawaban
+      let answer = cariJawabanKampus(question) || responses['default'];
+      
+      // Tampilkan jawaban setelah delay
+      setTimeout(() => {
+        const typingDiv = document.getElementById('typing-indicator');
+        if (typingDiv) typingDiv.remove();
+        
+        addMessage(answer, 'bot');
+      }, 1500 + Math.random() * 1000);
+    }
+
+    function addMessage(content, sender) {
+      const chatBody = document.getElementById('chatBody');
+      const messageDiv = document.createElement('div');
+      messageDiv.className = `message ${sender}`;
+      
+      if (sender === 'bot') {
+        messageDiv.innerHTML = `
+          <img src="https://imgs.search.brave.com/b79lgwBlZKV8jY_9zGLmYfMhOWa1IohzOscSbq4Q7nM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/a2licmlzcGRyLm9y/Zy9kYXRhLzExOC9k/b3dubG9hZC1sb2dv/LXVuaXZlcnNpdGFz/LXB1dGVyYS1iYXRh/bS0yLmpwZw" class="avatar">
+          <div class="message-content">${content}</div>
+        `;
+      } else {
+        messageDiv.innerHTML = `
+          <img src="https://imgs.search.brave.com/b79lgwBlZKV8jY_9zGLmYfMhOWa1IohzOscSbq4Q7nM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/a2licmlzcGRyLm9y/Zy9kYXRhLzExOC9k/b3dubG9hZC1sb2dv/LXVuaXZlcnNpdGFz/LXB1dGVyYS1iYXRh/bS0yLmpwZw" class="avatar">
+          <div class="message-content">${content}</div>
+        `;
+      }
+      
+      chatBody.appendChild(messageDiv);
+      chatBody.scrollTop = chatBody.scrollHeight;
+      
+      // Tambahkan animasi untuk pesan baru
+      setTimeout(() => {
+        messageDiv.style.animation = 'messageAppear 0.3s ease-out';
+      }, 10);
+    }
+
+    function sendMessage() {
+      const input = document.getElementById('chatInput');
+      const message = input.value.trim();
+      
+      if (message) {
+        askQuestion(message);
+        input.value = '';
+        document.getElementById('suggestions').style.display = 'none';
+      }
+    }
+
+    // Ambil semua keyword unik dari kampusData
     function getAllKeywords() {
       let all = [];
       for (let item of kampusData) {
         all = all.concat(item.keywords);
+      }
+      // Tambahkan pertanyaan dari responses
+      for (let question in responses) {
+        if (question !== 'default') {
+          all.push(question);
+        }
       }
       // Hilangkan duplikat
       return [...new Set(all)];
@@ -349,63 +893,84 @@
 
     // Tampilkan saran/autocomplete
     function showSuggestions() {
-      let input = document.getElementById("input").value.toLowerCase();
-      let suggestions = document.getElementById("suggestions");
+      let input = document.getElementById('chatInput').value.toLowerCase();
+      let suggestions = document.getElementById('suggestions');
+      
       if (!input) {
-        suggestions.style.display = "none";
-        suggestions.innerHTML = "";
+        suggestions.style.display = 'none';
+        suggestions.innerHTML = '';
         return;
       }
+      
       let keywords = getAllKeywords();
       let filtered = keywords.filter(k => k.toLowerCase().includes(input));
+      
       if (filtered.length === 0) {
-        suggestions.style.display = "none";
-        suggestions.innerHTML = "";
+        suggestions.style.display = 'none';
+        suggestions.innerHTML = '';
         return;
       }
-      suggestions.innerHTML = filtered.map((k, i) =>
-        `<li onclick="selectSuggestion('${k.replace(/'/g,"\\'")}')" tabindex="0">${k}</li>`
-      ).join("");
-      suggestions.style.display = "block";
+      
+      suggestions.innerHTML = filtered.map(k => 
+        `<li onclick="selectSuggestion('${k.replace(/'/g, "\\'")}')">${k}</li>`
+      ).join('');
+      
+      suggestions.style.display = 'block';
     }
 
     // Ketika user klik saran
     function selectSuggestion(text) {
-      document.getElementById("input").value = text;
-      document.getElementById("suggestions").style.display = "none";
-      chat();
+      document.getElementById('chatInput').value = text;
+      document.getElementById('suggestions').style.display = 'none';
+      sendMessage();
     }
 
-    // Sembunyikan saran jika klik di luar input/saran
-    document.addEventListener("click", function(e) {
-      if (!e.target.closest("#input") && !e.target.closest("#suggestions")) {
-        document.getElementById("suggestions").style.display = "none";
+    function closeChat() {
+      document.getElementById('chatContainer').style.display = 'none';
+    }
+
+    function toggleTheme() {
+      const body = document.body;
+      const themeIcon = document.getElementById('themeIcon');
+      
+      if (body.getAttribute('data-theme') === 'dark') {
+        body.removeAttribute('data-theme');
+        themeIcon.className = 'fas fa-moon';
+        localStorage.setItem('theme', 'light');
+      } else {
+        body.setAttribute('data-theme', 'dark');
+        themeIcon.className = 'fas fa-sun';
+        localStorage.setItem('theme', 'dark');
+      }
+    }
+
+    // Event listener untuk menutup saran ketika klik di luar
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('#suggestions') && !e.target.closest('#chatInput')) {
+        document.getElementById('suggestions').style.display = 'none';
       }
     });
 
-    // Navigasi keyboard untuk suggestion (opsional)
-    document.getElementById("input").addEventListener("keydown", function(e) {
-      let suggestions = document.getElementById("suggestions");
-      if (suggestions.style.display === "block") {
-        let items = Array.from(suggestions.getElementsByTagName("li"));
-        let idx = items.findIndex(li => li.classList.contains("active"));
-        if (e.key === "ArrowDown") {
-          e.preventDefault();
-          if (idx >= 0) items[idx].classList.remove("active");
-          idx = (idx + 1) % items.length;
-          items[idx].classList.add("active");
-          items[idx].scrollIntoView({block: "nearest"});
-        } else if (e.key === "ArrowUp") {
-          e.preventDefault();
-          if (idx >= 0) items[idx].classList.remove("active");
-          idx = (idx - 1 + items.length) % items.length;
-          items[idx].classList.add("active");
-          items[idx].scrollIntoView({block: "nearest"});
-        } else if (e.key === "Enter" && idx >= 0) {
-          e.preventDefault();
-          items[idx].click();
-        }
+    // Inisialisasi saat halaman dimuat
+    document.addEventListener('DOMContentLoaded', function() {
+      // Set greeting berdasarkan waktu
+      setGreeting();
+      
+      // Load tema yang disimpan
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark') {
+        document.body.setAttribute('data-theme', 'dark');
+        document.getElementById('themeIcon').className = 'fas fa-sun';
       }
+      
+      // Buka chat container secara default
+      document.getElementById('chatContainer').style.display = 'flex';
+      
+      // Animasikan kartu aksi cepat
+      const actionCards = document.querySelectorAll('.action-card');
+      actionCards.forEach((card, index) => {
+        card.style.animationDelay = `${0.1 + index * 0.1}s`;
+      });
     });
   </script>
 </body>
