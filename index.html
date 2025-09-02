@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>UPBot AI Assistant</title>
+  <title>UPBot Assistant</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
@@ -374,6 +374,66 @@
         opacity: 1;
       }
     }
+ /* Tombol Feedback */
+    .feedback-buttons {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+      justify-content: flex-end;
+    }
+
+    .feedback-btn {
+      padding: 4px 8px;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      background: var(--input-bg);
+      color: var(--text-secondary);
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .feedback-btn:hover {
+      background: var(--primary-color);
+      color: white;
+    }
+
+    .feedback-btn.active {
+      background: var(--primary-color);
+      color: white;
+    }
+    
+    .floating-buttons {
+      position: fixed;
+      bottom: 90px;
+      right: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      z-index: 100;
+    }
+
+    .floating-btn {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--primary-color);
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+      border: none;
+      transition: all 0.3s ease;
+    }
+
+    .floating-btn:hover {
+      transform: scale(1.1) rotate(5deg);
+    } 
 
     .theme-toggle {
       position: fixed;
@@ -632,7 +692,7 @@
         <div class="message bot">
           <img src="https://imgs.search.brave.com/b79lgwBlZKV8jY_9zGLmYfMhOWa1IohzOscSbq4Q7nM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/a2licmlzcGRyLm9y/Zy9kYXRhLzExOC9k/b3dubG9hZC1sb2dv/LXVuaXZlcnNpdGFz/LXB1dGVyYS1iYXRh/bS0yLmpwZw" class="avatar">
           <div class="message-content">
-            Halo! Saya UPBot AI Assistant 🤖<br>
+            Halo! Saya UPBot Assistant 🤖<br>
             Ada yang bisa saya bantu tentang Universitas Putera Batam?
           </div>
         </div>
@@ -650,6 +710,12 @@
   <button class="theme-toggle" onclick="toggleTheme()">
     <i class="fas fa-moon" id="themeIcon"></i>
   </button>
+
+  <div class="floating-buttons">
+    <button class="floating-btn" onclick="openGithub()" title="Source Code di GitHub">
+      <i class="fab fa-github"></i>
+    </button>
+  </div>
 
   <script>
     // Database jawaban untuk quick responses (dari kode awal yang dikirim)
@@ -777,6 +843,9 @@ Setiap jurusan atau program studi di Universitas Putera Batam memiliki peluang k
         • Prospek kerja lulusan
       `
     };
+
+    const GITHUB_URL = "https://github.com/NabilEkoWahyudi/UPBot"; // Ganti dengan URL GitHub Anda
+    
 
     // Variabel global untuk data kampus
     let kampusData = [];
@@ -940,6 +1009,11 @@ Setiap jurusan atau program studi di Universitas Putera Batam memiliki peluang k
         input.value = '';
         document.getElementById('suggestions').style.display = 'none';
       }
+    }
+
+    // Fungsi untuk membuka GitHub
+    function openGithub() {
+      window.open(GITHUB_URL, '_blank');
     }
 
     // Ambil semua keyword unik dari kampusData
